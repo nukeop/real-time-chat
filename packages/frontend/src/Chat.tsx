@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3000/chat');
+const socket = io('https://realtime-chat.fly.dev/chat');
 
 type ChatProps = {
   nickname: string;
