@@ -1,15 +1,15 @@
+import { Logger } from '@nestjs/common';
 import {
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { ChatService } from './chat.service';
 import { RoomsService } from '../rooms/rooms.service';
 import { UsersService } from '../users/users.service';
-import { Logger } from '@nestjs/common';
+import { ChatService } from './chat.service';
 
 @WebSocketGateway({ namespace: '/chat', cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -31,9 +31,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('joinRoom')
-  handleJoinRoom(client: Socket, payload: { roomId: string, nickname: string, password?: string }) {
+  handleJoinRoom(
+    client: Socket,
+    payload: { roomId: string; nickname: string; password?: string },
+  ) {
     const room = this.roomsService.getRoomById(payload.roomId);
-    
+
     if (room.password && room.password !== payload.password) {
       client.emit('error', { message: 'Incorrect password' });
       return;
@@ -48,11 +51,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.roomsService.addUserToRoom(payload.roomId, user);
 
     client.join(payload.roomId);
-    this.server.to(payload.roomId).emit('userJoined', { nickname: payload.nickname });
+    this.server
+      .to(payload.roomId)
+      .emit('userJoined', { nickname: payload.nickname });
   }
 
   @SubscribeMessage('sendMessage')
-  handleMessage(client: Socket, payload: { roomId: string, message: string }) {
+  handleMessage(client: Socket, payload: { roomId: string; message: string }) {
     if (!this.chatService.validateMessage(payload.message)) {
       client.emit('error', { message: 'Invalid message' });
       return;

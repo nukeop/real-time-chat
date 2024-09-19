@@ -9,7 +9,6 @@ describe('ChatGateway', () => {
   let gateway: ChatGateway;
   let chatService: ChatService;
   let roomsService: RoomsService;
-  let usersService: UsersService;
   let client: Socket;
 
   const mockServer = {
@@ -47,7 +46,6 @@ describe('ChatGateway', () => {
     gateway = module.get<ChatGateway>(ChatGateway);
     chatService = module.get<ChatService>(ChatService);
     roomsService = module.get<RoomsService>(RoomsService);
-    usersService = module.get<UsersService>(UsersService);
     client = { id: 'socket1', join: jest.fn(), emit: jest.fn() } as any;
     gateway.server = mockServer as any;
   });
