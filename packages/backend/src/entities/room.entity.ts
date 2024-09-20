@@ -5,7 +5,8 @@ export class Room {
 
   constructor(
     public id: string,
+    public name: string,
     public maxUsers: number,
-    public password?: string,
+    private password?: string,
   ) {}
 }
