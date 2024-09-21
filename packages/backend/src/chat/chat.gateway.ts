@@ -37,7 +37,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {
     const room = this.roomsService.getRoomById(payload.roomId);
 
-    if (room.password && room.password !== payload.password) {
+    if (room.hasPassword() && room.validatePassword(payload.password)) {
       client.emit('error', { message: 'Incorrect password' });
       return;
     }

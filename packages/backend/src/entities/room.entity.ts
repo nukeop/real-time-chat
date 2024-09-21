@@ -9,4 +9,12 @@ export class Room {
     public maxUsers: number,
     private password?: string,
   ) {}
+
+  hasPassword(): boolean {
+    return Boolean(this.password);
+  }
+
+  validatePassword(password: string): boolean {
+    return this.password === password;
+  }
 }
