@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
-
-const socket = io('https://realtime-chat.fly.dev/chat');
+import { ApiClient } from '../api/client';
 
 type ChatProps = {
   nickname: string;
@@ -12,6 +10,8 @@ type Message = {
   nickname: string;
   message: string;
 };
+
+const socket = ApiClient.getSocket();
 
 export function Chat({ nickname, room }: ChatProps) {
   const [message, setMessage] = useState('');
