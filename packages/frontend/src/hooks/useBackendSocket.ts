@@ -1,9 +1,9 @@
+import { ServerEvent } from '@real-time-chat/core';
 import { useContext, useEffect } from 'react';
-import { BackendEvent } from '../api/backend.types';
 import { BackendSocketContext } from '../contexts/BackendSocketContext';
 
 export const useBackendSocket = (
-  event: BackendEvent,
+  event: ServerEvent,
   callback: (data: any) => void,
 ) => {
   const { socket } = useContext(BackendSocketContext)!;

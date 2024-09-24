@@ -1,0 +1,9 @@
+{
+  "name": "@real-time-chat/core",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "scripts": {},
+  "author": "",
+  "license": "UNLICENSED",
+  "description": ""
+}

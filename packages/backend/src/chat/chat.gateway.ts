@@ -6,6 +6,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { ClientEvent } from '@real-time-chat/core';
 import { Server, Socket } from 'socket.io';
 import { RoomsService } from '../rooms/rooms.service';
 import { UsersService } from '../users/users.service';
@@ -30,7 +31,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  @SubscribeMessage('joinRoom')
+  @SubscribeMessage(ClientEvent.JOIN_ROOM)
   handleJoinRoom(
     client: Socket,
     payload: { roomId: string; nickname: string; password?: string },
@@ -56,7 +57,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       .emit('userJoined', { nickname: payload.nickname });
   }
 
-  @SubscribeMessage('sendMessage')
+  @SubscribeMessage(ClientEvent.SEND_MESSAGE)
   handleMessage(client: Socket, payload: { roomId: string; message: string }) {
     if (!this.chatService.validateMessage(payload.message)) {
       client.emit('error', { message: 'Invalid message' });

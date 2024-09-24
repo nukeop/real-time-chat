@@ -1,4 +1,4 @@
-export enum BackendEvent {
+export enum ServerEvent {
   CONNECT = 'connect',
   DISCONNECT = 'disconnect',
   MESSAGE = 'message',
@@ -6,7 +6,7 @@ export enum BackendEvent {
   USER_JOINED = 'userJoined',
 }
 
-export enum BackendClientEvent {
+export enum ClientEvent {
   SEND_MESSAGE = 'sendMessage',
   JOIN_ROOM = 'joinRoom',
 }
