@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@real-time-chat/core": "^0.0.1",
+    "@tanstack/react-table": "^8.20.5",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "react": "^18.3.1",
