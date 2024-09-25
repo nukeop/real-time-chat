@@ -6,7 +6,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { ClientEvent } from '@real-time-chat/core';
+import { ClientEvent, ServerEvent } from '@real-time-chat/core';
 import { Server, Socket } from 'socket.io';
 import { RoomsService } from '../rooms/rooms.service';
 import { UsersService } from '../users/users.service';
@@ -34,38 +34,38 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage(ClientEvent.JOIN_ROOM)
   handleJoinRoom(
     client: Socket,
-    payload: { roomId: string; nickname: string; password?: string },
+    payload: { id: string; nickname: string; password?: string },
   ) {
-    const room = this.roomsService.getRoomById(payload.roomId);
+    const room = this.roomsService.getRoomById(payload.id);
 
     if (room.hasPassword() && room.validatePassword(payload.password)) {
-      client.emit('error', { message: 'Incorrect password' });
+      client.emit(ServerEvent.ERROR, { message: 'Incorrect password' });
       return;
     }
 
     if (room.users.length >= room.maxUsers) {
-      client.emit('error', { message: 'Room is full' });
+      client.emit(ServerEvent.ERROR, { message: 'Room is full' });
       return;
     }
 
     const user = this.usersService.createUser(payload.nickname, client.id);
-    this.roomsService.addUserToRoom(payload.roomId, user);
+    this.roomsService.addUserToRoom(payload.id, user);
 
-    client.join(payload.roomId);
+    client.join(payload.id);
     this.server
-      .to(payload.roomId)
-      .emit('userJoined', { nickname: payload.nickname });
+      .to(payload.id)
+      .emit(ServerEvent.USER_JOINED, { nickname: payload.nickname });
   }
 
   @SubscribeMessage(ClientEvent.SEND_MESSAGE)
   handleMessage(client: Socket, payload: { roomId: string; message: string }) {
     if (!this.chatService.validateMessage(payload.message)) {
-      client.emit('error', { message: 'Invalid message' });
+      client.emit(ServerEvent.ERROR, { message: 'Invalid message' });
       return;
     }
 
     const user = this.usersService.getUserByClientId(client.id);
-    this.server.to(payload.roomId).emit('message', {
+    this.server.to(payload.roomId).emit(ServerEvent.MESSAGE, {
       nickname: user.nickname,
       message: payload.message,
     });

@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { ClientEvent } from '@real-time-chat/core';
+import { useContext, useState } from 'react';
+import { BackendSocketContext } from '../contexts/BackendSocketContext';
 import { Chat } from './Chat';
 
 export const Connect = () => {
   const [nickname, setNickname] = useState('');
   const [room, setRoom] = useState('');
   const [joined, setJoined] = useState(false);
+  const { socket } = useContext(BackendSocketContext)!;
 
   const handleJoin = () => {
+    socket?.emit(ClientEvent.JOIN_ROOM, { nickname, id: room });
     if (nickname && room) {
       setJoined(true);
     }
