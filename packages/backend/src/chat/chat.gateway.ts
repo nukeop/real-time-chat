@@ -31,6 +31,28 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
+  @SubscribeMessage(ClientEvent.CREATE_ROOM)
+  handleCreateRoom(
+    client: Socket,
+    payload: {
+      name: string;
+      nickname: string;
+      maxUsers: number;
+      password?: string;
+    },
+  ) {
+    const room = this.roomsService.createRoom(
+      payload.name,
+      payload.maxUsers,
+      payload.password,
+    );
+    client.emit(ServerEvent.ROOM_CREATED, { id: room.id });
+    client.join(room.id);
+    this.server
+      .to(room.id)
+      .emit(ServerEvent.USER_JOINED, { nickname: payload.nickname });
+  }
+
   @SubscribeMessage(ClientEvent.JOIN_ROOM)
   handleJoinRoom(
     client: Socket,
@@ -49,11 +71,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
 
     const user = this.usersService.createUser(payload.nickname, client.id);
-    this.roomsService.addUserToRoom(payload.id, user);
+    this.roomsService.addUserToRoom(room.id, user);
 
-    client.join(payload.id);
+    client.join(room.id);
     this.server
-      .to(payload.id)
+      .to(room.id)
       .emit(ServerEvent.USER_JOINED, { nickname: payload.nickname });
   }
 

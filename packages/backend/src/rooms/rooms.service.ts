@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import { Room } from '../entities/room.entity';
 import { User } from '../entities/user.entity';
+import { GetRoomsDto } from './dto/get-rooms.dto';
 
-const DEFAULT_MAX_USERS = 10;
 @Injectable()
 export class RoomsService {
   private rooms: Room[] = [];
@@ -21,14 +21,20 @@ export class RoomsService {
     const room = this.rooms.find((room) => room.id === id);
 
     if (!room) {
-      return this.createRoom(id, DEFAULT_MAX_USERS);
+      throw new Error(`Room with id ${id} not found`);
     } else {
       return room;
     }
   }
 
-  getRooms(): Room[] {
-    return this.rooms;
+  getRooms(): GetRoomsDto[] {
+    return this.rooms.map((room) => ({
+      id: room.id,
+      name: room.name,
+      maxUsers: room.maxUsers,
+      users: room.users.map((user) => ({ nickname: user.nickname })),
+      hasPassword: room.hasPassword(),
+    }));
   }
 
   addUserToRoom(roomId: string, user: User) {
