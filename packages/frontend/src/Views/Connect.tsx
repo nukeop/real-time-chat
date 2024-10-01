@@ -43,7 +43,7 @@ export const Connect = () => {
           </button>
         </div>
       ) : (
-        <Chat nickname={nickname} room={room} />
+        <Chat />
       )}
     </div>
   );

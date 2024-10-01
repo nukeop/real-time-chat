@@ -4,6 +4,6 @@ export type RoomChatProps = {
   room: GetRoomsResponse;
 };
 
-export const RoomChat: React.FC<RoomChatProps> = ({ room }) => {
-  return <div className="flex flex-col h-full">test</div>;
+export const RoomChat: React.FC<RoomChatProps> = () => {
+  return <div className="flex h-full flex-col">test</div>;
 };
