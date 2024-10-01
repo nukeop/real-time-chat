@@ -9,6 +9,8 @@
     "packages/*"
   ],
   "scripts": {
+    "build:backend": "lerna run build --scope @real-time-chat/backend",
+    "start:backend": "lerna run start:prod --scope @real-time-chat/backend",
     "dev": "lerna run dev --stream",
     "lint": "lerna run lint"
   },
