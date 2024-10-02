@@ -22,14 +22,13 @@ RUN apt-get update -qq && \
 # Install node modules
 COPY --link package.json ./
 COPY --link package-lock.json ./
-RUN npm i --with-dev
+RUN npm ci
 
 # Copy application code
 COPY --link . .
 
 # Build application
 RUN npm run build:backend
-
 
 # Final stage for app image
 FROM base

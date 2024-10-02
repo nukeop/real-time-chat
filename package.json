@@ -9,10 +9,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build:backend": "lerna run build --scope @real-time-chat/backend",
-    "start:backend": "lerna run start:prod --scope @real-time-chat/backend",
-    "dev": "lerna run dev --stream",
-    "lint": "lerna run lint"
+    "build:backend": "npx lerna run build --scope @real-time-chat/backend",
+    "start:backend": "npx lerna run start:prod --scope @real-time-chat/backend",
+    "dev": "npx lerna run dev --stream",
+    "lint": "npx lerna run lint"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
