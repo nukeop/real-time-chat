@@ -9,9 +9,6 @@ LABEL fly_launch_runtime="NestJS"
 # NestJS app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -19,10 +16,14 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
+ENV NODE_ENV="production"
+
 # Install node modules
 COPY --link package.json ./
 COPY --link package-lock.json ./
-RUN npm ci
+COPY --link packages/backend packages/backend
+COPY --link packages/core packages/core
+RUN npm ci --include dev
 
 # Copy application code
 COPY --link . .

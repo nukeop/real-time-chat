@@ -9,12 +9,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build:backend": "npx lerna run build --scope @real-time-chat/backend",
-    "start:backend": "npx lerna run start:prod --scope @real-time-chat/backend",
-    "dev": "npx lerna run dev --stream",
-    "lint": "npx lerna run lint"
+    "build:backend": "npm run build -w @real-time-chat/backend",
+    "start:backend": "lerna run start:prod --scope @real-time-chat/backend",
+    "dev": "lerna run dev --stream",
+    "lint": "lerna run lint"
   },
   "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
