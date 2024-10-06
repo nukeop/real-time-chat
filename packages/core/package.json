@@ -1,8 +1,10 @@
 {
   "name": "@real-time-chat/core",
   "version": "0.0.1",
-  "main": "src/index.ts",
-  "scripts": {},
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "author": "",
   "license": "UNLICENSED",
   "description": ""

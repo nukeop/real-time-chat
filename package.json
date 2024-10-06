@@ -9,7 +9,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build:backend": "npm run build -w @real-time-chat/backend",
+    "build:backend": "npm run build -w @real-time-chat/core -w @real-time-chat/backend",
     "start:backend": "lerna run start:prod --scope @real-time-chat/backend",
     "dev": "lerna run dev --stream",
     "lint": "lerna run lint"

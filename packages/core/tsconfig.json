@@ -3,5 +3,9 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "outDir": "./dist",
-    }
+        "composite": true,
+    },
+    "include": [
+        "./src/**/*.ts"
+    ],
 }

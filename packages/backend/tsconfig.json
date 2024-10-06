@@ -11,6 +11,12 @@
     "baseUrl": "."
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "../../core/src/**/*.ts"
+  ],
+  "references": [
+    {
+      "path": "../core"
+    }
   ]
 }
