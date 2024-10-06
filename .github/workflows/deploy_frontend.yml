@@ -34,8 +34,6 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: ./packages/frontend
-        env:
-          NODE_ENV: production
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
