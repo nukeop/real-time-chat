@@ -11,6 +11,7 @@
   "scripts": {
     "build:backend": "npm run build -w @real-time-chat/core -w @real-time-chat/backend",
     "start:backend": "lerna run start:prod --scope @real-time-chat/backend --stream",
+    "start:frontend": "lerna run dev --scope @real-time-chat/frontend --stream",
     "dev": "lerna run dev --stream",
     "lint": "lerna run lint"
   },

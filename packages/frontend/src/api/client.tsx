@@ -2,8 +2,13 @@ import { io } from 'socket.io-client';
 
 export const apiBaseUrl =
   process.env.NODE_ENV === 'production'
-    ? 'https://realtime-chat.fly.dev/chat'
+    ? 'https://realtime-chat.fly.dev'
     : 'http://localhost:3000';
+
+export const socketBaseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'localhost:3000/chat'
+    : 'https://realtime-chat.fly.dev/chat';
 
 export type GetRoomsResponse = {
   id: string;
