@@ -66,7 +66,7 @@ export function Chat() {
             className="mb-4"
           >
             <p className="font-semibold">{message.nickname}</p>
-            <p className="bg-gray-700 p-2 rounded-lg inline-block">
+            <p className="inline-block rounded-lg bg-gray-700 p-2">
               {message.message}
             </p>
           </motion.div>
@@ -78,11 +78,11 @@ export function Chat() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message..."
-          className="flex-grow rounded-l-md bg-slate-700 border-transparent focus:border-indigo-500 focus:bg-slate-600 focus:ring-0 text-white px-4 py-1"
+          className="flex-grow rounded-l-md border-transparent bg-slate-700 px-4 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
         />
         <button
           onClick={sendMessage}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-r-md transition-colors"
+          className="rounded-r-md bg-indigo-600 px-4 py-2 font-bold text-white transition-colors hover:bg-indigo-700"
         >
           Send
         </button>

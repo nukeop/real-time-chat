@@ -28,9 +28,6 @@ RUN npm ci --include dev
 # Copy application code
 COPY --link . .
 
-# Build application
-RUN npm run build:backend
-
 # Final stage for app image
 FROM base
 

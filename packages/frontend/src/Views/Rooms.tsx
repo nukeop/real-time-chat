@@ -61,13 +61,13 @@ export const Rooms = () => {
         transition={{ duration: 0.3 }}
         className="flex h-screen w-full flex-row bg-slate-900 text-white"
       >
-        <div className="flex-grow overflow-y-auto p-4 flex-1 w-2/3">
+        <div className="w-2/3 flex-1 flex-grow overflow-y-auto p-4">
           <RoomsTable rooms={rooms} onJoinRoom={onJoinRoom} />
         </div>
         <div className="w-1/3">
-          <h2 className="text-2xl font-semibold mb-4">Create a New Room</h2>
+          <h2 className="mb-4 text-2xl font-semibold">Create a New Room</h2>
           <form
-            className="bg-slate-800 p-4 rounded-lg"
+            className="rounded-lg bg-slate-800 p-4"
             onSubmit={formik.handleSubmit}
           >
             <div className="mb-4">
@@ -80,7 +80,7 @@ export const Rooms = () => {
                   type="text"
                   placeholder="Room Name"
                   required
-                  className="mt-1 block w-full rounded-md bg-slate-700 border-transparent focus:border-indigo-500 focus:bg-slate-600 focus:ring-0 px-2 py-1 text-white"
+                  className="mt-1 block w-full rounded-md border-transparent bg-slate-700 px-2 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
                   {...formik.getFieldProps('name')}
                 />
                 {formik.touched.name && formik.errors.name ? (
@@ -97,7 +97,7 @@ export const Rooms = () => {
                 <input
                   type="text"
                   placeholder="Password (optional)"
-                  className="mt-1 block w-full rounded-md bg-slate-700 border-transparent focus:border-indigo-500 focus:bg-slate-600 focus:ring-0 px-2 py-1 text-white"
+                  className="mt-1 block w-full rounded-md border-transparent bg-slate-700 px-2 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
                   {...formik.getFieldProps('password')}
                 />
               </label>
@@ -111,7 +111,7 @@ export const Rooms = () => {
                 <input
                   type="number"
                   placeholder="Max Users"
-                  className="mt-1 block w-full rounded-md bg-slate-700 border-transparent focus:border-indigo-500 focus:bg-slate-600 focus:ring-0 px-2 py-1 text-white"
+                  className="mt-1 block w-full rounded-md border-transparent bg-slate-700 px-2 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
                   {...formik.getFieldProps('maxUsers')}
                 />
                 {formik.touched.maxUsers && formik.errors.maxUsers ? (
@@ -122,7 +122,7 @@ export const Rooms = () => {
 
             <button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition-colors"
+              className="w-full rounded bg-indigo-600 px-4 py-2 font-bold text-white transition-colors hover:bg-indigo-700"
             >
               Create Room
             </button>

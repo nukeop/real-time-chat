@@ -3,16 +3,11 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "outDir": "./dist",
-    "paths": {
-      "@real-time-chat/core": [
-        "../../core/src/*"
-      ]
-    },
     "baseUrl": "."
   },
   "include": [
     "./src/**/*.ts",
-    "../../core/src/**/*.ts"
+    "../core/src/**/*.ts"
   ],
   "references": [
     {

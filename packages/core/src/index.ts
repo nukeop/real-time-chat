@@ -1,1 +1,1 @@
-export * from './Event';
+export { ClientEvent, ServerEvent } from './Event';
