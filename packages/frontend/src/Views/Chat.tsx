@@ -45,8 +45,6 @@ export function Chat() {
     }
   };
 
-  console.log({ messages, message });
-
   return (
     <motion.div
       key="chat"

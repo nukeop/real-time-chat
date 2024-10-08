@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -15,20 +15,30 @@ import { ChatService } from './chat.service';
 @WebSocketGateway({ namespace: '/chat', cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
-  private readonly logger = new Logger('ChatGateway');
+  private readonly logger = new Logger(ChatGateway.name);
 
   constructor(
-    private readonly chatService: ChatService,
-    private readonly roomsService: RoomsService,
-    private readonly usersService: UsersService,
+    @Inject(ChatService) private readonly chatService: ChatService,
+    @Inject(RoomsService) private readonly roomsService: RoomsService,
+    @Inject(UsersService) private readonly usersService: UsersService,
   ) {}
 
   handleConnection(client: Socket) {
-    this.logger.log(`Client connected: ${client.id}`);
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleConnection.name} - called`,
+      {
+        id: client.id,
+      },
+    );
   }
 
   handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnected: ${client.id}`);
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleDisconnect.name} - called`,
+      {
+        id: client.id,
+      },
+    );
   }
 
   @SubscribeMessage(ClientEvent.CREATE_ROOM)
@@ -41,6 +51,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       password?: string;
     },
   ) {
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleCreateRoom.name} - called`,
+      payload,
+    );
+
     const room = this.roomsService.createRoom(
       payload.name,
       payload.maxUsers,
@@ -56,9 +71,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage(ClientEvent.JOIN_ROOM)
   handleJoinRoom(
     client: Socket,
-    payload: { id: string; nickname: string; password?: string },
+    payload: { roomId: string; nickname: string; password?: string },
   ) {
-    const room = this.roomsService.getRoomById(payload.id);
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleJoinRoom.name} - called`,
+      payload,
+    );
+    const room = this.roomsService.getRoomById(payload.roomId);
 
     if (room.hasPassword() && room.validatePassword(payload.password)) {
       client.emit(ServerEvent.ERROR, { message: 'Incorrect password' });
@@ -81,6 +100,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage(ClientEvent.SEND_MESSAGE)
   handleMessage(client: Socket, payload: { roomId: string; message: string }) {
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleMessage.name} - called`,
+      payload,
+    );
     if (!this.chatService.validateMessage(payload.message)) {
       client.emit(ServerEvent.ERROR, { message: 'Invalid message' });
       return;

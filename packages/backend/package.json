@@ -5,9 +5,9 @@
   "author": "",
   "private": true,
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "ts-node -r tsconfig-paths/register src/main.ts",
-    "dev": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start": "tsx -r tsconfig-paths/register src/main.ts",
+    "start:dev": "tsx -r tsconfig-paths/register src/main.ts",
+    "dev": "tsx -r tsconfig-paths/register src/main.ts",
     "start:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register src/main.ts",
     "start:prod": "tsx src/main.ts",
     "build": "nest build",

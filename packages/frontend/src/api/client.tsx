@@ -7,8 +7,8 @@ export const apiBaseUrl =
 
 export const socketBaseUrl =
   process.env.NODE_ENV === 'production'
-    ? 'localhost:3000/chat'
-    : 'https://realtime-chat.fly.dev/chat';
+    ? 'https://realtime-chat.fly.dev/chat'
+    : 'localhost:3000/chat';
 
 export type GetRoomsResponse = {
   id: string;

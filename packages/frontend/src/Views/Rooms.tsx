@@ -44,11 +44,13 @@ export const Rooms = () => {
       password: Yup.string().optional(),
     }),
     onSubmit: (values) => {
-      socket?.emit(ClientEvent.CREATE_ROOM, {
+      socket!.emit(ClientEvent.CREATE_ROOM, {
         name: values.name,
         maxUsers: values.maxUsers,
         password: values.password,
       });
+
+      formik.resetForm();
     },
   });
 
