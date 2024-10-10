@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.9",
+    "@heroicons/react": "^2.1.5",
     "@real-time-chat/core": "^0.0.1",
     "@tanstack/react-table": "^8.20.5",
     "autoprefixer": "^10.4.20",

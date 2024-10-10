@@ -3,11 +3,14 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.scss';
 import { BackendSocketProvider } from './contexts/BackendSocketContext.tsx';
+import { UserProfileProvider } from './contexts/UserProfileContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BackendSocketProvider>
-      <App />
+      <UserProfileProvider>
+        <App />
+      </UserProfileProvider>
     </BackendSocketProvider>
   </StrictMode>,
 );

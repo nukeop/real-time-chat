@@ -2,7 +2,13 @@ import { useContext } from 'react';
 import { BackendSocketContext } from '../contexts/BackendSocketContext';
 
 export const useBackendSocket = () => {
-  const { socket } = useContext(BackendSocketContext)!;
+  const context = useContext(BackendSocketContext)!;
 
-  return socket;
+  if (!context) {
+    throw new Error(
+      'useBackendSocket must be used within a BackendSocketProvider',
+    );
+  }
+
+  return context.socket;
 };

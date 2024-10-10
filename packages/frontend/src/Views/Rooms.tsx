@@ -61,9 +61,9 @@ export const Rooms = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className="flex h-screen w-full flex-row bg-slate-900 text-white"
+        className="flex h-auto w-full flex-row gap-4 bg-slate-900 text-white"
       >
-        <div className="w-2/3 flex-1 flex-grow overflow-y-auto p-4">
+        <div className="w-2/3 overflow-y-auto">
           <RoomsTable rooms={rooms} onJoinRoom={onJoinRoom} />
         </div>
         <div className="w-1/3">

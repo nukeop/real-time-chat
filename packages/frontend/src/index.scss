@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    @apply box-border;
+}
+
 html,
 body,
 #root {
@@ -9,5 +13,5 @@ body,
 }
 
 #root {
-    @apply flex flex-col items-start justify-center text-white;
+    @apply flex flex-col items-center justify-start text-white;
 }
