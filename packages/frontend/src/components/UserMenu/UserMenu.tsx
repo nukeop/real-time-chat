@@ -1,20 +1,11 @@
 import { UserCircleIcon } from '@heroicons/react/20/solid';
-import { motion } from 'framer-motion';
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { redirect } from 'react-router-dom';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 
-const dropdownData = [
-  { id: 1, label: 'Profile', onClick: () => alert('Profile clicked') },
-  { id: 2, label: 'Settings', onClick: () => alert('Settings clicked') },
-  { id: 3, label: 'Logout', onClick: () => alert('Logout clicked') },
-];
-
 export const UserMenu: FC = () => {
   const { username, setUsername } = useUserProfile();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <DropdownMenu
@@ -27,9 +18,9 @@ export const UserMenu: FC = () => {
       items={[
         {
           id: '1',
-          label: 'Change username',
-          onClick: () => setUsername('New username'),
-          value: 'Change username',
+          label: 'Settings',
+          onClick: () => redirect('/settings'),
+          value: 'Settings',
         },
       ]}
     />
