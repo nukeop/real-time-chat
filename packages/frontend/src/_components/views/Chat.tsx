@@ -2,7 +2,7 @@ import { ClientEvent, ServerEvent } from '@real-time-chat/core';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { ApiClient } from '../api/client';
+import { ApiClient } from '../../api/client';
 
 type Message = {
   nickname: string;

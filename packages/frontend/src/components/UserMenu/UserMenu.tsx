@@ -1,13 +1,14 @@
 'use client';
 
 import { UserCircleIcon } from '@heroicons/react/20/solid';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { redirect } from 'react-router-dom';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { DropdownMenu } from '../DropdownMenu/DropdownMenu';
 
 export const UserMenu: FC = () => {
   const { username } = useUserProfile();
+  const { push } = useRouter();
 
   return (
     <DropdownMenu
@@ -21,7 +22,7 @@ export const UserMenu: FC = () => {
         {
           id: '1',
           label: 'Settings',
-          onClick: () => redirect('/settings'),
+          onClick: () => push('/settings'),
           value: 'Settings',
         },
       ]}

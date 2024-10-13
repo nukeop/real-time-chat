@@ -4,6 +4,7 @@ import { StatusBar } from '../components/StatusBar/StatusBar';
 import { UserMenu } from '../components/UserMenu/UserMenu';
 import { Providers } from './providers';
 import './index.scss';
+import { AnimatedPage } from '../_components/AnimatedPage';
 
 export const metadata: Metadata = {};
 
@@ -21,7 +22,7 @@ export default function RootLayout({
             <UserMenu />
           </StatusBar>
           <div className="relative flex max-h-full w-full max-w-screen-lg flex-row items-start justify-center pt-16">
-            {children}
+            <AnimatedPage>{children}</AnimatedPage>
           </div>
         </Providers>
       </body>
