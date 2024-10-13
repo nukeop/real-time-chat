@@ -3,32 +3,33 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint . --fix",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.9",
     "@heroicons/react": "^2.1.5",
     "@real-time-chat/core": "^0.0.1",
     "@tanstack/react-table": "^8.20.5",
-    "autoprefixer": "^10.4.20",
     "formik": "^2.4.6",
     "framer-motion": "^11.9.0",
-    "postcss": "^8.4.47",
+    "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sass-embedded": "^1.79.1",
+    "sass": "^1.79.5",
     "socket.io-client": "^4.7.5",
-    "tailwindcss": "^3.4.12",
     "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
     "globals": "^15.9.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
     "typescript": "^5.5.3",
     "vite": "^5.4.1"
   }

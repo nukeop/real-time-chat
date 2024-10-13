@@ -1,3 +1,5 @@
+'use client';
+
 import { useConnectionStatus } from './useConnectionStatus';
 
 export const ConnectionStatus = () => {

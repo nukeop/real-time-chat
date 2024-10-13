@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply box-border;
+}
+
+html,
+body {
+    @apply bg-slate-900 w-full h-full absolute;
+}
+
+body {
+    @apply flex flex-col items-center justify-start text-white;
+}

@@ -1,12 +1,12 @@
 import { io } from 'socket.io-client';
 
 export const apiBaseUrl =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV !== 'production'
     ? 'https://realtime-chat.fly.dev'
     : 'http://localhost:3000';
 
 export const socketBaseUrl =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV !== 'production'
     ? 'https://realtime-chat.fly.dev/chat'
     : 'localhost:3000/chat';
 
