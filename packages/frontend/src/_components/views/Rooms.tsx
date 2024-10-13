@@ -7,8 +7,8 @@ import { FC } from 'react';
 import * as Yup from 'yup';
 import { GetRoomsResponse } from '../../api/client';
 import { RoomsTable } from '../../components/RoomsTable/RoomsTable';
-import { useBackendSocket } from '../../hooks/useBackendSocket';
-import { useBackendSocketSubscription } from '../../hooks/useBackendSocketSubscription';
+import { useBackendSocket } from '../../_hooks/useBackendSocket';
+import { useBackendSocketSubscription } from '../../_hooks/useBackendSocketSubscription';
 
 type RoomsProps = {
   rooms: GetRoomsResponse[];

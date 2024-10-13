@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { ConnectionStatus } from '../components/ConnectionStatus/ConnectionStatus';
-import { StatusBar } from '../components/StatusBar/StatusBar';
-import { UserMenu } from '../components/UserMenu/UserMenu';
+import { ConnectionStatus } from '../_components/ConnectionStatus/ConnectionStatus';
+import { StatusBar } from '../_components/StatusBar/StatusBar';
+import { UserMenu } from '../_components/UserMenu/UserMenu';
 import { Providers } from './providers';
 import './index.scss';
 import { AnimatedPage } from '../_components/AnimatedPage';

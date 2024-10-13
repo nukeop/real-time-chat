@@ -1,6 +1,6 @@
 import { ClientEvent } from '@real-time-chat/core';
 import { useContext, useState } from 'react';
-import { BackendSocketContext } from '../../contexts/BackendSocketContext';
+import { BackendSocketContext } from '../../_contexts/BackendSocketContext';
 import { Chat } from './Chat';
 
 export const Connect = () => {

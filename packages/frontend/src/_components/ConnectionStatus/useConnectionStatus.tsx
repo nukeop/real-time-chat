@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BackendSocketContext } from '../../contexts/BackendSocketContext';
+import { BackendSocketContext } from '../../_contexts/BackendSocketContext';
 
 export const useConnectionStatus = () => {
   const { isConnected } = useContext(BackendSocketContext)!;
