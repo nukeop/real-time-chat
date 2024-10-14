@@ -5,10 +5,10 @@ import { useFormik } from 'formik';
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 import * as Yup from 'yup';
-import { GetRoomsResponse } from '../../api/client';
-import { RoomsTable } from '../../components/RoomsTable/RoomsTable';
 import { useBackendSocket } from '../../_hooks/useBackendSocket';
 import { useBackendSocketSubscription } from '../../_hooks/useBackendSocketSubscription';
+import { GetRoomsResponse } from '../../api/client';
+import { RoomsTable } from '../RoomsTable/RoomsTable';
 
 type RoomsProps = {
   rooms: GetRoomsResponse[];

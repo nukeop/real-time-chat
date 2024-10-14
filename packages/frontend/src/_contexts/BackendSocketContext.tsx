@@ -5,6 +5,7 @@ import { socketBaseUrl } from '../api/client';
 type BackendSocketContextType = {
   socket: Socket | null;
   isConnected: boolean;
+  isConnecting: boolean;
 };
 
 type BackendSocketProviderProps = {
@@ -19,13 +20,25 @@ export const BackendSocketProvider: React.FC<BackendSocketProviderProps> = ({
 }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(true);
 
   useEffect(() => {
+    setIsConnecting(true);
     const socketInstance = io(`${socketBaseUrl}`);
-    setSocket(socketInstance);
 
-    socketInstance.on('connect', () => setIsConnected(true));
-    socketInstance.on('disconnect', () => setIsConnected(false));
+    socketInstance.on('connect', () => {
+      setIsConnected(true);
+      setIsConnecting(false);
+    });
+
+    socketInstance.on('disconnect', () => {
+      setIsConnected(false);
+      setIsConnecting(false);
+    });
+
+    socketInstance.on('connect_error', () => {
+      setIsConnecting(false);
+    });
 
     return () => {
       socketInstance.disconnect();
@@ -33,7 +46,9 @@ export const BackendSocketProvider: React.FC<BackendSocketProviderProps> = ({
   }, []);
 
   return (
-    <BackendSocketContext.Provider value={{ socket, isConnected }}>
+    <BackendSocketContext.Provider
+      value={{ socket, isConnected, isConnecting }}
+    >
       {children}
     </BackendSocketContext.Provider>
   );

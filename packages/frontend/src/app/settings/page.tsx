@@ -1,5 +1,7 @@
+import { SettingsView } from '../../_components/views/SettingsView';
+
 const Settings = async () => {
-  return <div>Settings</div>;
+  return <SettingsView />;
 };
 
 export default Settings;
