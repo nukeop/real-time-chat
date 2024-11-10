@@ -1,9 +1,9 @@
-import { Rooms } from '../_components/views/Rooms';
+import { HomeView } from '../_components/views/HomeView';
 import { ApiClient } from '../api/client';
 
 const Home = async () => {
   const rooms = await ApiClient.getRooms();
-  return <Rooms rooms={rooms} />;
+  return <HomeView rooms={rooms} />;
 };
 
 export default Home;

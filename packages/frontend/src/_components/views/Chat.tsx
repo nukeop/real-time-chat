@@ -1,7 +1,9 @@
+'use client';
+
 import { ClientEvent, ServerEvent } from '@real-time-chat/core';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+
 import { ApiClient } from '../../api/client';
 
 type Message = {
@@ -11,14 +13,13 @@ type Message = {
 
 const socket = ApiClient.getSocket();
 
-type ChatLoaderData = {
+type ChatProps = {
   roomId: string;
 };
 
-export function Chat() {
+export const Chat: FC<ChatProps> = ({ roomId }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-  const { roomId } = useLoaderData() as ChatLoaderData;
   const nickname = 'test';
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export function Chat() {
       transition={{ duration: 0.3 }}
       className="flex h-screen w-full flex-col bg-slate-800"
     >
+      <h1 className="p-4 text-2xl font-semibold">Room: {roomId}</h1>
       <div className="flex-grow overflow-y-auto p-4">
         {messages.map((message, index) => (
           <motion.div
@@ -79,6 +81,7 @@ export function Chat() {
           className="flex-grow rounded-l-md border-transparent bg-slate-700 px-4 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
         />
         <button
+          type="button"
           onClick={sendMessage}
           className="rounded-r-md bg-indigo-600 px-4 py-2 font-bold text-white transition-colors hover:bg-indigo-700"
         >
@@ -87,4 +90,4 @@ export function Chat() {
       </div>
     </motion.div>
   );
-}
+};

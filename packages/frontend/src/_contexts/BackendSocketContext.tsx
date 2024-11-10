@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
+
 import { socketBaseUrl } from '../api/client';
 
 type BackendSocketContextType = {
@@ -25,6 +26,7 @@ export const BackendSocketProvider: React.FC<BackendSocketProviderProps> = ({
   useEffect(() => {
     setIsConnecting(true);
     const socketInstance = io(`${socketBaseUrl}`);
+    setSocket(socketInstance);
 
     socketInstance.on('connect', () => {
       setIsConnected(true);

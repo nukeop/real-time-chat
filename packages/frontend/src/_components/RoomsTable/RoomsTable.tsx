@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+
 import { GetRoomsResponse } from '../../api/client';
 
 type RoomsTableProps = {
@@ -23,7 +24,6 @@ export const RoomsTable: React.FC<RoomsTableProps> = ({
           {rooms.map((room) => (
             <motion.button
               key={room.id}
-              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="cursor-pointer rounded-lg bg-slate-800 p-4 transition-colors hover:bg-slate-700"
               onClick={() => onJoinRoom(room.id)}
@@ -46,6 +46,7 @@ export const RoomsTable: React.FC<RoomsTableProps> = ({
     </>
   );
 };
+
 const EmptyState: React.FC = () => (
   <div className="flex h-64 flex-col items-center justify-center rounded-lg bg-slate-800">
     <svg

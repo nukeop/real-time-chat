@@ -2,9 +2,14 @@
   "singleQuote": true,
   "trailingComma": "all",
   "importOrder": [
+    "<BUILTIN_MODULES>",
     "^@/",
+    "",
     "^[../]",
-    "^[./]"
+    "",
+    "^[./]",
+    "",
+    "^[^.]*\\.scss$"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,

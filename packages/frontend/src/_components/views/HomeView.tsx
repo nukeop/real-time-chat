@@ -2,9 +2,10 @@
 
 import { ClientEvent, ServerEvent } from '@real-time-chat/core';
 import { useFormik } from 'formik';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import * as Yup from 'yup';
+
 import { useBackendSocket } from '../../_hooks/useBackendSocket';
 import { useBackendSocketSubscription } from '../../_hooks/useBackendSocketSubscription';
 import { GetRoomsResponse } from '../../api/client';
@@ -14,18 +15,20 @@ type RoomsProps = {
   rooms: GetRoomsResponse[];
 };
 
-export const Rooms: FC<RoomsProps> = ({ rooms }) => {
+export const HomeView: FC<RoomsProps> = ({ rooms }) => {
+  const router = useRouter();
+
+  const onJoinRoom = (roomId: string) => {
+    router.push(`/rooms/${roomId}`);
+  };
+
   const socket = useBackendSocket();
   useBackendSocketSubscription(
     ServerEvent.ROOM_CREATED,
     ({ id }: { id: string }) => {
-      redirect(`/rooms/${id}`);
+      onJoinRoom(id);
     },
   );
-
-  const onJoinRoom = (roomId: string) => {
-    redirect(`/rooms/${roomId}`);
-  };
 
   const formik = useFormik({
     initialValues: {

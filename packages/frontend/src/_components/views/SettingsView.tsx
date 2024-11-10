@@ -12,11 +12,12 @@ export const SettingsView: FC = () => {
     initialValues: {
       username,
     },
-
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
       if (values.username) {
         setUsername(values.username);
       }
+      setSubmitting(false);
     },
   });
 

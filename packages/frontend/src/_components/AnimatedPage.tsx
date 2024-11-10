@@ -10,7 +10,7 @@ export const AnimatedPage: FC<{ children: ReactNode }> = ({ children }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="flex h-auto w-full flex-row gap-4 bg-transparent text-white"
+      className="mx-2 flex h-auto w-full flex-row gap-4 rounded-md bg-slate-800 p-4 text-white shadow-lg ring-1 ring-slate-700 lg:mx-0"
     >
       {children}
     </motion.main>
