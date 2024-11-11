@@ -1,5 +1,20 @@
-import { useContext } from 'react';
-import { UserProfileContext } from '../_contexts/UserProfileContext';
+import { useContext, useEffect, useState } from 'react';
+
+import {
+  UserProfileContext,
+  UserProfileState,
+} from '../_contexts/UserProfileContext';
+
+const LOCAL_STORAGE_KEY = 'userProfile';
+
+const loadUserProfile = (): UserProfileState => {
+  const storedProfile = localStorage.getItem(LOCAL_STORAGE_KEY);
+  return storedProfile ? JSON.parse(storedProfile) : {};
+};
+
+const saveUserProfile = (profile: Record<string, any>) => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(profile));
+};
 
 export const useUserProfile = () => {
   const context = useContext(UserProfileContext);
@@ -8,7 +23,18 @@ export const useUserProfile = () => {
     throw new Error('useUserProfile must be used within a UserProfileProvider');
   }
 
-  const { username, setUsername } = context;
+  const [profile, setProfile] = useState<UserProfileState>(loadUserProfile);
 
-  return { username, setUsername };
+  useEffect(() => {
+    saveUserProfile(profile);
+  }, [profile]);
+
+  const setUsername = (username: string) => {
+    setProfile((prev) => ({ ...prev, username }));
+  };
+
+  return {
+    username: profile.username,
+    setUsername,
+  };
 };

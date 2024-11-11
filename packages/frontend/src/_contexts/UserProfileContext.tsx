@@ -1,7 +1,10 @@
 import { createContext, useState } from 'react';
 
-type UserProfileContextType = {
+export type UserProfileState = {
   username: string | null;
+};
+
+export type UserProfileContextType = UserProfileState & {
   setUsername: (username: string) => void;
 };
 
