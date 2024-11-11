@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, FC, useState } from 'react';
 
 export type UserProfileState = {
   username: string | null;
@@ -16,7 +16,7 @@ export const UserProfileContext = createContext<UserProfileContextType | null>(
   null,
 );
 
-export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({
+export const UserProfileProvider: FC<UserProfileProviderProps> = ({
   children,
 }) => {
   const [username, setUsername] = useState<string | null>(null);
