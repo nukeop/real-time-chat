@@ -1,47 +1,60 @@
 'use client';
 
+import { HashtagIcon } from '@heroicons/react/24/outline';
 import { ClientEvent, ServerEvent } from '@real-time-chat/core';
+import { RoomInfoServerPayload } from '@real-time-chat/core/src/Event';
 import { motion } from 'framer-motion';
-import { FC, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 
-import { ApiClient } from '../../api/client';
+import { useBackendSocket } from '../../_hooks/useBackendSocket';
 
 type Message = {
   nickname: string;
   message: string;
 };
 
-const socket = ApiClient.getSocket();
-
 type ChatProps = {
   roomId: string;
 };
 
 export const Chat: FC<ChatProps> = ({ roomId }) => {
+  const socket = useBackendSocket();
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [roomName, setRoomName] = useState('');
+  const [users, setUsers] = useState<string[]>([]);
   const nickname = 'test';
 
   useEffect(() => {
-    socket.emit(ClientEvent.JOIN_ROOM, { roomId, nickname });
+    console.log('joining room', { roomId, nickname });
 
-    socket.on(ServerEvent.MESSAGE, (msg) => {
+    socket?.emit(ClientEvent.JOIN_ROOM, { roomId, nickname });
+
+    socket?.on(ServerEvent.MESSAGE, (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
 
-    socket.on(ServerEvent.ERROR, (err) => {
+    socket?.on(ServerEvent.ERROR, (err) => {
       alert(err.message);
     });
 
-    return () => {
-      socket.off(ServerEvent.MESSAGE);
-      socket.off(ServerEvent.ERROR);
-    };
-  }, [roomId, nickname]);
+    socket?.on(ServerEvent.ROOM_INFO, (info: RoomInfoServerPayload) => {
+      setRoomName(info.name);
+      setUsers(info.users);
+    });
 
-  const sendMessage = () => {
+    return () => {
+      console.log('leaving room', { roomId, nickname });
+      socket?.emit(ClientEvent.LEAVE_ROOM, { roomId, nickname });
+      socket?.off(ServerEvent.MESSAGE);
+      socket?.off(ServerEvent.ERROR);
+    };
+  }, []);
+
+  const sendMessage = (e: FormEvent) => {
+    e.preventDefault();
     if (message.trim()) {
-      socket.emit(ClientEvent.SEND_MESSAGE, { roomId, message });
+      socket!.emit(ClientEvent.SEND_MESSAGE, { roomId, message });
       setMessage('');
     }
   };
@@ -53,9 +66,20 @@ export const Chat: FC<ChatProps> = ({ roomId }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="flex h-screen w-full flex-col bg-slate-800"
+      className="flex w-full flex-grow flex-col bg-slate-800"
     >
-      <h1 className="p-4 text-2xl font-semibold">Room: {roomId}</h1>
+      <div className="flex items-center justify-between rounded-t-md bg-slate-900 p-4">
+        <h1 className="text-md flex items-center justify-start font-medium text-gray-300">
+          <HashtagIcon className="mr-2 inline-block h-6 w-6 text-gray-400" />
+          {roomName}
+          <span className="ml-2 font-thin text-gray-600">({roomId})</span>
+        </h1>
+        <div className="flex items-center">
+          <span className="mr-2 text-sm text-gray-400">
+            Users Online: {users.length}
+          </span>
+        </div>
+      </div>
       <div className="flex-grow overflow-y-auto p-4">
         {messages.map((message, index) => (
           <motion.div
@@ -72,7 +96,7 @@ export const Chat: FC<ChatProps> = ({ roomId }) => {
           </motion.div>
         ))}
       </div>
-      <div className="flex p-4">
+      <form className="flex p-4" onSubmit={sendMessage}>
         <input
           type="text"
           value={message}
@@ -81,13 +105,13 @@ export const Chat: FC<ChatProps> = ({ roomId }) => {
           className="flex-grow rounded-l-md border-transparent bg-slate-700 px-4 py-1 text-white focus:border-indigo-500 focus:bg-slate-600 focus:ring-0"
         />
         <button
-          type="button"
+          type="submit"
           onClick={sendMessage}
           className="rounded-r-md bg-indigo-600 px-4 py-2 font-bold text-white transition-colors hover:bg-indigo-700"
         >
           Send
         </button>
-      </div>
+      </form>
     </motion.div>
   );
 };

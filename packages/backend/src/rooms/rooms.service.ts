@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { nanoid } from 'nanoid';
+
 import { Room } from '../entities/room.entity';
 import { User } from '../entities/user.entity';
 import { GetRoomsDto } from './dto/get-rooms.dto';
@@ -28,6 +29,7 @@ export class RoomsService {
   }
 
   getRooms(): GetRoomsDto[] {
+    this.logger.log('Getting all rooms');
     return this.rooms.map((room) => ({
       id: room.id,
       name: room.name,
@@ -44,6 +46,16 @@ export class RoomsService {
     const room = this.getRoomById(roomId);
     if (room && room.users.length < room.maxUsers) {
       room.users.push(user);
+    }
+  }
+
+  removeUserFromRoom(roomId: string, user: User) {
+    this.logger.log(
+      `Removing user <${user.clientId}≥[${user.nickname}] from room: ${roomId}`,
+    );
+    const room = this.getRoomById(roomId);
+    if (room) {
+      room.users = room.users.filter((u) => u.clientId !== user.clientId);
     }
   }
 }

@@ -7,7 +7,9 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { ClientEvent, ServerEvent } from '@real-time-chat/core';
+import { RoomInfoServerPayload } from '@real-time-chat/core/src/Event';
 import { Server, Socket } from 'socket.io';
+
 import { RoomsService } from '../rooms/rooms.service';
 import { UsersService } from '../users/users.service';
 import { ChatService } from './chat.service';
@@ -30,6 +32,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         id: client.id,
       },
     );
+
+    this.server.on(ClientEvent.JOIN_ROOM, () => {
+      this.logger.log('test');
+    });
   }
 
   handleDisconnect(client: Socket) {
@@ -68,6 +74,22 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       .emit(ServerEvent.USER_JOINED, { nickname: payload.nickname });
   }
 
+  @SubscribeMessage(ClientEvent.LEAVE_ROOM)
+  handleLeaveRoom(client: Socket, payload: { roomId: string }) {
+    this.logger.log(
+      `${ChatGateway.name}.${this.handleLeaveRoom.name} - called`,
+      payload,
+    );
+    const user = this.usersService.getUserByClientId(client.id);
+    const room = this.roomsService.getRoomById(payload.roomId);
+
+    this.roomsService.removeUserFromRoom(room.id, user);
+    client.leave(room.id);
+    this.server
+      .to(room.id)
+      .emit(ServerEvent.USER_LEFT, { nickname: user.nickname });
+  }
+
   @SubscribeMessage(ClientEvent.JOIN_ROOM)
   handleJoinRoom(
     client: Socket,
@@ -93,6 +115,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.roomsService.addUserToRoom(room.id, user);
 
     client.join(room.id);
+
+    client.emit(ServerEvent.ROOM_INFO, {
+      name: room.name,
+      users: room.users.map((u) => u.nickname),
+    } as RoomInfoServerPayload);
+
     this.server
       .to(room.id)
       .emit(ServerEvent.USER_JOINED, { nickname: payload.nickname });

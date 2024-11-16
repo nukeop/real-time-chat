@@ -9,12 +9,12 @@ import { useToast } from './useToast';
 const LOCAL_STORAGE_KEY = 'userProfile';
 
 const loadUserProfile = (): UserProfileState => {
-  const storedProfile = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const storedProfile = localStorage?.getItem(LOCAL_STORAGE_KEY);
   return storedProfile ? JSON.parse(storedProfile) : {};
 };
 
 const saveUserProfile = (profile: Record<string, any>) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(profile));
+  localStorage?.setItem(LOCAL_STORAGE_KEY, JSON.stringify(profile));
 };
 
 export const useUserProfile = () => {
